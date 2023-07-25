@@ -16,6 +16,6 @@ router.get("/log-in", auth_controller.log_in_get);
 
 router.post("/log-in", auth_controller.log_in_post);
 
-router.get("/log-out", auth_controller.log_out_post);
+router.get("/log-out", auth_controller.log_out_get);
 
 module.exports = router;

@@ -1,0 +1,27 @@
+extends layout 
+
+block content 
+    form(method='POST' action='')
+        .form-group 
+            label(for='first-name') First Name: 
+            input#first-name(type="text" placeholder="John" name="firstName")
+        .form-group
+            label(for='last-name') Last Name:
+            input#last-name(type='text' placeholder='Doe' name='lastName')
+
+        .form-group
+            label(for='username') Username:
+            input#username(type='text' placeholder='johndoe123' name='username')
+
+        .form-group
+            label(for='email') Email:
+            input#email(type='email' placeholder='johndoe@example.com' name='email')
+
+        .form-group
+            label(for='password') Password:
+            input#password(type='password' placeholder='••••••••' name='password')
+
+        .form-group
+            label(for='confirm-password') Confirm Password:
+            input#confirm-password(type='password' placeholder='••••••••' name='confirmPassword')
+        button.btn-submit(type='submit') Sign Up
