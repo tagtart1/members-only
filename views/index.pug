@@ -3,4 +3,7 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  if (currentUser)
+    h2 Welcome #{currentUser.first_name}
   a(href="/sign-up") Sign up
+  a(href="/log-in") Log in

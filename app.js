@@ -1,9 +1,13 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
+var passport = require("passport");
+const session = require("express-session");
 require("dotenv").config();
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+
+const passportConfig = require("./config/passportConfig");
 
 var indexRouter = require("./routes/index");
 
@@ -16,15 +20,25 @@ async function main() {
   await mongoose.connect(process.env.MONGODB_URI);
 }
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
+app.use(passport.session());
+// Config passport
+passportConfig(passport);
+
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 app.use("/", indexRouter);
 

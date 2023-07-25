@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+const passport = require("passport");
 
 exports.sign_up_get = (req, res) => {
   res.render("sign-up", { errors: {} });
@@ -45,7 +46,6 @@ exports.sign_up_post = [
     //Extract errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("ERRORS");
       res.render("sign-up", { errors: errors.mapped() });
     } else {
       bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
@@ -69,11 +69,25 @@ exports.sign_up_post = [
 ];
 
 exports.log_in_get = (req, res, next) => {
-  res.send("WIP log in get");
+  res.render("log-in");
 };
+
 exports.log_in_post = (req, res, next) => {
-  res.send("WIP log in post");
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+
+    if (!user) {
+      // Failed to authenticate
+      return res.render("log-in", { error: info.message });
+    }
+    // User is available, log them in
+    req.login(user, (err) => {
+      if (err) return next(err);
+      return res.redirect("/");
+    });
+  })(req, res, next);
 };
+
 exports.log_out_get = (req, res, next) => {
   res.send("WIP lost out get");
 };
