@@ -8,20 +8,29 @@ block content
         .form-group
             label(for='last-name') Last Name:
             input#last-name(type='text' placeholder='Doe' name='lastName')
-
+            if errors.lastName 
+                p= errors.lastName.msg
         .form-group
             label(for='username') Username:
             input#username(type='text' placeholder='johndoe123' name='username')
+            if errors.username 
+                p= errors.username.msg
 
         .form-group
             label(for='email') Email:
             input#email(type='email' placeholder='johndoe@example.com' name='email')
+            if errors.email 
+                p= errors.email.msg
 
         .form-group
             label(for='password') Password:
             input#password(type='password' placeholder='••••••••' name='password')
+            if errors.password 
+                p= errors.password.msg
 
         .form-group
             label(for='confirm-password') Confirm Password:
             input#confirm-password(type='password' placeholder='••••••••' name='confirmPassword')
+            if errors.confirmPassword 
+                p= errors.confirmPassword.msg
         button.btn-submit(type='submit') Sign Up
