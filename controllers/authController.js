@@ -130,18 +130,44 @@ exports.join_the_club_get = [
 
 exports.join_the_club_post = [
   body("secretCode").escape(),
+  body("permissionSelection", "Select what permission you want access to")
+    .notEmpty()
+    .escape(),
+
   asyncHandler(async (req, res) => {
-    // Secret code not correct, inform user dont give access
-    if (req.body.secretCode !== process.env.SECRET_PASSCODE) {
-      return res.render("join-the-club", { invalidCode: true });
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      console.log(errors);
+      res.render("join-the-club", { errors: errors.array() });
     }
 
-    // Secret code correct, change the users membership status
-    await User.findByIdAndUpdate(req.user.id, {
-      membership_status: true,
-    });
+    if (req.body.permissionSelection === "membership") {
+      // Secret code not correct, inform user dont give access
+      if (req.body.secretCode !== process.env.SECRET_MEMBER_PASSCODE) {
+        return res.render("join-the-club", { invalidCode: true });
+      }
 
-    // Redirect to home page where user can now see authors and can create new messages
-    res.redirect("/");
+      // Secret code correct, change the users membership status
+      await User.findByIdAndUpdate(req.user.id, {
+        membership_status: true,
+      });
+
+      // Redirect to home page where user can now see authors and can create new messages
+      return res.redirect("/");
+    }
+
+    if (req.body.permissionSelection === "admin") {
+      // Secret code not correct, inform user dont give access
+      if (req.body.secretCode !== process.env.SECRET_ADMIN_PASSCODE) {
+        return res.render("join-the-club", { invalidCode: true });
+      }
+
+      await User.findByIdAndUpdate(req.user.id, {
+        isAdmin: true,
+      });
+
+      return res.redirect("/");
+    }
   }),
 ];

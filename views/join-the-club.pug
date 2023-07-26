@@ -8,8 +8,21 @@ block content
   form(method='POST' action="") 
     if (invalidCode)
         p Wrong code, no access for you :(
+    .form-group  
+        input#membership(type="radio" name="permissionSelection" value="membership")
+        label(for='membership') Membership:
     .form-group 
-        label(for='secret-code') Secret Code: 
-        input#secret-code(type="text" name="secretCode")
+        input#admin(type="radio" name="permissionSelection" value="admin")
+        label(for="admin") Admin
+    .form-group 
+        label(for='admin-secret-code') Secret Code: 
+        input#admin-secret-code(type='text' name="secretCode")
     button.btn-submit(type="submit") Join
+
+    if errors 
+        ul 
+            for error in errors 
+                li= error.msg
+                
+
   

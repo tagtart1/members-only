@@ -9,12 +9,12 @@ block content
             if (errors.title)
                 p= errors.title.msg
             label(for='title')
-            input#title(type='text' placeholder='Title...' name='title' value=(undefined===titleText ? '' : titleText))
+            input#title(type='text' required='true'  placeholder='Title...' name='title' value=(undefined===titleText ? '' : titleText))
         .form-group 
             if (errors.text)
                 p= errors.text.msg
             label(for='text')
-            textarea#text(name='text' rows='5' cols='30' value=(undefined===text ? '' : text ))   
+            textarea#text(name='text' required='true' rows='5' cols='30' value=(undefined===text ? '' : text ))   
         button.btn-submit(type='submit') Create Message    
 
            
