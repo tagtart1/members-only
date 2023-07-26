@@ -62,6 +62,13 @@ exports.sign_up_post = [
           membership_status: false,
         });
         await newUser.save();
+
+        req.login(newUser, (err) => {
+          if (err) {
+            return next(err);
+          }
+        });
+
         res.redirect("/");
       });
     }
