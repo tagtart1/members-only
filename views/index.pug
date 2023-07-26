@@ -13,3 +13,15 @@ block content
       a(href="/join-the-club") Join The Club
     div 
       a(href="/create-message") Create Message
+
+  div 
+    each message in messages
+      .message 
+        if (currentUser && currentUser.membership_status)
+          p= message.author.full_name
+          p= message.author.username
+          p= message.formatted_date
+        else 
+          p Unknown author and date
+        p= message.title 
+        p= message.text

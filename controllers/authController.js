@@ -1,9 +1,18 @@
 const User = require("../models/user");
+const Message = require("../models/message");
 const bcrypt = require("bcryptjs");
 
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
+
+exports.home_get = asyncHandler(async (req, res, next) => {
+  const messages = await Message.find({})
+    .populate("author", "username first_name last_name")
+    .exec();
+
+  res.render("index", { title: "Express", messages: messages });
+});
 
 exports.sign_up_get = (req, res) => {
   res.render("sign-up", { errors: {} });
