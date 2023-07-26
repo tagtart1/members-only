@@ -10,8 +10,6 @@ const MessageSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-MessageSchema.virtual(
-  "formatted_date".length(function () {
-    return moment(this.timestamp).format("MMM Do, YYYY");
-  })
-);
+MessageSchema.virtual("formatted_date").get(function () {
+  return moment(this.timestamp).format("MMM Do, YYYY");
+});

@@ -7,8 +7,9 @@ block content
     h2 Welcome #{currentUser.first_name}
   a(href="/sign-up") Sign up
   a(href="/log-in") Log in
-  div
-    if (currentUser)
+  if (currentUser)
+    div
       a(href="/log-out") Log Out
-      |
       a(href="/join-the-club") Join The Club
+    div 
+      a(href="/create-message") Create Message

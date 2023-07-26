@@ -10,6 +10,7 @@ var logger = require("morgan");
 const passportConfig = require("./config/passportConfig");
 
 var indexRouter = require("./routes/index");
+var messageRouter = require("./routes/message");
 
 var app = express();
 // Set up mongoose connection
@@ -47,6 +48,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.use("/", indexRouter);
+app.use("/", messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
