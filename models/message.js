@@ -13,3 +13,5 @@ const MessageSchema = new Schema({
 MessageSchema.virtual("formatted_date").get(function () {
   return moment(this.timestamp).format("MMM Do, YYYY");
 });
+
+module.exports = mongoose.model("Message", MessageSchema);
