@@ -7,3 +7,5 @@ block content
     h2 Welcome #{currentUser.first_name}
   a(href="/sign-up") Sign up
   a(href="/log-in") Log in
+  if (currentUser)
+    a(href="/log-out") Log Out

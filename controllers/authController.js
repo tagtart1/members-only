@@ -65,11 +65,12 @@ exports.sign_up_post = [
 
         req.login(newUser, (err) => {
           if (err) {
+            console.error(err);
             return next(err);
           }
+          console.log("SESSION YAY");
+          res.redirect("/");
         });
-
-        res.redirect("/");
       });
     }
   }),
@@ -96,5 +97,10 @@ exports.log_in_post = (req, res, next) => {
 };
 
 exports.log_out_get = (req, res, next) => {
-  res.send("WIP lost out get");
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 };
