@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 Join the club today
+  h3 Just enter the super secret code 
+  p only cool people know it though ;)
+
+  form(method='POST' action="") 
+    if (invalidCode)
+        p Wrong code, no access for you :(
+    .form-group 
+        label(for='secret-code') Secret Code: 
+        input#secret-code(type="text" name="secretCode")
+    button.btn-submit(type="submit") Join
+  

@@ -18,4 +18,8 @@ router.post("/log-in", auth_controller.log_in_post);
 
 router.get("/log-out", auth_controller.log_out_get);
 
+router.get("/join-the-club", auth_controller.join_the_club_get);
+
+router.post("/join-the-club", auth_controller.join_the_club_post);
+
 module.exports = router;

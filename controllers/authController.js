@@ -68,7 +68,7 @@ exports.sign_up_post = [
             console.error(err);
             return next(err);
           }
-          console.log("SESSION YAY");
+
           res.redirect("/");
         });
       });
@@ -104,3 +104,35 @@ exports.log_out_get = (req, res, next) => {
     res.redirect("/");
   });
 };
+
+exports.join_the_club_get = [
+  // Ensure only authenticated users can access this page
+  (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect("/log-in");
+  },
+  // Render the view
+  (req, res) => {
+    res.render("join-the-club");
+  },
+];
+
+exports.join_the_club_post = [
+  body("secretCode").escape(),
+  asyncHandler(async (req, res) => {
+    // Secret code not correct, inform user dont give access
+    if (req.body.secretCode !== process.env.SECRET_PASSCODE) {
+      return res.render("join-the-club", { invalidCode: true });
+    }
+
+    // Secret code correct, change the users membership status
+    await User.findByIdAndUpdate(req.user.id, {
+      membership_status: true,
+    });
+
+    // Redirect to home page where user can now see authors and can create new messages
+    res.redirect("/");
+  }),
+];
