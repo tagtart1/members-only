@@ -11,11 +11,11 @@ exports.home_get = asyncHandler(async (req, res, next) => {
     .populate("author", "username first_name last_name")
     .exec();
 
-  res.render("index", { title: "Express", messages: messages });
+  res.render("index", { title: "Member's Only - Home", messages: messages });
 });
 
 exports.sign_up_get = (req, res) => {
-  res.render("sign-up", { errors: {} });
+  res.render("sign-up", { errors: {}, title: "Sign Up" });
 };
 
 exports.sign_up_post = [
@@ -56,7 +56,7 @@ exports.sign_up_post = [
     //Extract errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render("sign-up", { errors: errors.mapped() });
+      res.render("sign-up", { errors: errors.mapped(), title: "Sign Up" });
     } else {
       bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
         if (err) {
@@ -86,7 +86,7 @@ exports.sign_up_post = [
 ];
 
 exports.log_in_get = (req, res, next) => {
-  res.render("log-in");
+  res.render("log-in", { title: "Log In" });
 };
 
 exports.log_in_post = (req, res, next) => {
@@ -95,7 +95,7 @@ exports.log_in_post = (req, res, next) => {
 
     if (!user) {
       // Failed to authenticate
-      return res.render("log-in", { error: info.message });
+      return res.render("log-in", { error: info.message, title: "Log In" });
     }
     // User is available, log them in
     req.login(user, (err) => {
@@ -124,7 +124,7 @@ exports.join_the_club_get = [
   },
   // Render the view
   (req, res) => {
-    res.render("join-the-club");
+    res.render("join-the-club", { title: "Join the club" });
   },
 ];
 
@@ -138,13 +138,19 @@ exports.join_the_club_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.render("join-the-club", { errors: errors.array() });
+      res.render("join-the-club", {
+        errors: errors.array(),
+        title: "Join the club",
+      });
     }
 
     if (req.body.permissionSelection === "membership") {
       // Secret code not correct, inform user dont give access
       if (req.body.secretCode !== process.env.SECRET_MEMBER_PASSCODE) {
-        return res.render("join-the-club", { invalidCode: true });
+        return res.render("join-the-club", {
+          invalidCode: true,
+          title: "Join the club",
+        });
       }
 
       // Secret code correct, change the users membership status
@@ -159,7 +165,10 @@ exports.join_the_club_post = [
     if (req.body.permissionSelection === "admin") {
       // Secret code not correct, inform user dont give access
       if (req.body.secretCode !== process.env.SECRET_ADMIN_PASSCODE) {
-        return res.render("join-the-club", { invalidCode: true });
+        return res.render("join-the-club", {
+          invalidCode: true,
+          title: "Join the club",
+        });
       }
 
       await User.findByIdAndUpdate(req.user.id, {

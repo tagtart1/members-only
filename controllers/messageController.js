@@ -11,7 +11,7 @@ exports.create_message_get = [
     res.redirect("/log-in");
   },
   (req, res, next) => {
-    res.render("create-message", { errors: {} });
+    res.render("create-message", { errors: {}, title: "Create A Message" });
   },
 ];
 
@@ -39,6 +39,7 @@ exports.create_message_post = [
         errors: errors.mapped(),
         text: message.text,
         titleText: message.title,
+        title: "Create A Message",
       });
     } else {
       const newMessage = new Message(message);
