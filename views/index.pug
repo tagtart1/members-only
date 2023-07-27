@@ -23,5 +23,9 @@ block content
           p= message.formatted_date
         else 
           p Unknown author and date
+        if (currentUser && currentUser.isAdmin)
+          form(action="/delete-message" method="POST")
+            input(type='text' hidden='true' value=message._id name="messageId")
+            button(type="submit") Delete 
         p= message.title 
         p= message.text

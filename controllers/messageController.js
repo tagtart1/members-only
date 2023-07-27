@@ -51,3 +51,12 @@ exports.create_message_post = [
     }
   }),
 ];
+
+exports.delete_message_post = [
+  body("messageId").escape(),
+  asyncHandler(async (req, res, next) => {
+    await Message.findByIdAndDelete(req.body.messageId);
+
+    res.redirect("/");
+  }),
+];
