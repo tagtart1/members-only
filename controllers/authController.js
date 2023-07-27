@@ -75,7 +75,6 @@ exports.sign_up_post = [
 
         req.login(newUser, (err) => {
           if (err) {
-            console.error(err);
             return next(err);
           }
 
@@ -139,7 +138,6 @@ exports.join_the_club_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      console.log(errors);
       res.render("join-the-club", { errors: errors.array() });
     }
 

@@ -35,14 +35,12 @@ exports.create_message_post = [
     };
 
     if (!errors.isEmpty()) {
-      console.log("WE GOT ERRORS");
       res.render("create-message", {
         errors: errors.mapped(),
         text: message.text,
         titleText: message.title,
       });
     } else {
-      console.log("ALL GOOD CREATE MESSAGE");
       const newMessage = new Message(message);
 
       await newMessage.save();
