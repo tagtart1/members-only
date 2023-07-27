@@ -1,31 +1,29 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  if (currentUser)
-    h2 Welcome #{currentUser.first_name}
-  a(href="/sign-up") Sign up
-  a(href="/log-in") Log in
-  if (currentUser)
-    div
-      a(href="/log-out") Log Out
-      a(href="/join-the-club") Join The Club
-    div 
-      a(href="/create-message") Create Message
+  main 
+    h1 Dashboard
+   
+    if (currentUser)
+      h2 Welcome #{currentUser.first_name}
+  
 
-  div 
-    each message in messages
-      .message 
-        if (currentUser && currentUser.membership_status)
-          p= message.author.full_name
-          p= message.author.username
-          p= message.formatted_date
-        else 
-          p Unknown author and date
-        if (currentUser && currentUser.isAdmin)
-          form(action="/delete-message" method="POST")
-            input(type='text' hidden='true' value=message._id name="messageId")
-            button(type="submit") Delete 
-        p= message.title 
-        p= message.text
+    .messages
+      each message in messages
+        .message 
+          h2= message.title 
+          if (currentUser && currentUser.membership_status)
+            .message-info
+              p #{message.author.full_name} • 
+              p @#{message.author.username} • 
+              p= message.formatted_date
+          else 
+            h3 Unknown author 
+            p Unknown date
+          p= message.text
+       
+          if (currentUser && currentUser.isAdmin)
+            form(action="/delete-message" method="POST")
+              input(type='text' hidden='true' value=message._id name="messageId")
+              button#delete-btn(type="submit") Delete 
+          
