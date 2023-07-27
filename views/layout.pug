@@ -11,18 +11,19 @@ html
       nav
         .nav-item 
           a(href="/") Home
+        .nav-item 
+          a(href="/join-the-club") Join The Club
         if (!currentUser)
           .nav-item
             a(href="/sign-up") Sign up
-        if (!currentUser)
           .nav-item
             a(href="/log-in") Log in
         if (currentUser)
           .nav-item
             a(href="/create-message") Create Message 
-        .nav-item 
-          a(href="/join-the-club") Join The Club
-        if(currentUser)
           .nav-item 
             a(href="/log-out") Log Out
+
+    
+
     block content
