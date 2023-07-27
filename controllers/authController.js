@@ -24,6 +24,7 @@ exports.sign_up_post = [
   body("lastName", "Enter a last name").trim().isLength({ min: 1 }).escape(),
   body("email")
     .isEmail()
+    .withMessage("Enter a valid email")
     .escape()
     .custom(async (input) => {
       const existingEmails = await User.countDocuments({ email: input });

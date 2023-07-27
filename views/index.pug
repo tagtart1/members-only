@@ -12,7 +12,7 @@ block content
       each message in messages
         .message 
           h2= message.title 
-          if (currentUser && currentUser.membership_status)
+          if (currentUser && (currentUser.membership_status || currentUser.isAdmin))
             .message-info
               p #{message.author.full_name} • 
               p @#{message.author.username} • 

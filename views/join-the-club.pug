@@ -1,28 +1,26 @@
 extends layout
 
 block content
-  h1 Join the club today
-  h3 Just enter the super secret code 
-  p only cool people know it though ;)
+    main
+        h1 Join the club today
+        h3 Just enter the super secret code 
+        p only cool people know it though ;)
 
-  form(method='POST' action="") 
-    if (invalidCode)
-        p Wrong code, no access for you :(
-    .form-group  
-        input#membership(type="radio" name="permissionSelection" value="membership")
-        label(for='membership') Membership:
-    .form-group 
-        input#admin(type="radio" name="permissionSelection" value="admin")
-        label(for="admin") Admin
-    .form-group 
-        label(for='admin-secret-code') Secret Code: 
-        input#admin-secret-code(type='text' name="secretCode")
-    button.btn-submit(type="submit") Join
+        form(method='POST' action="") 
+            if (invalidCode)
+                p Wrong code, no access for you :(
+            .form-group-radio
+                input#membership(type="radio" name="permissionSelection" value="membership")
+                label(for='membership') Membership:
+            .form-group-radio
+                input#admin(type="radio" name="permissionSelection" value="admin")
+                label(for="admin") Admin
+            .form-group 
+                label(for='admin-secret-code') Secret Code: 
+                input#admin-secret-code(type='text' name="secretCode")
+            button.btn-submit(type="submit") Join
 
-    if errors 
-        ul 
-            for error in errors 
-                li= error.msg
-                
-
-  
+            if errors 
+                ul 
+                    for error in errors 
+                        li= error.msg

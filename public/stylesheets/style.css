@@ -124,9 +124,32 @@ main {
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 4px;
+}
+
+.form-group-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 input {
+  padding: 8px 4px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid rgb(181, 181, 181);
+}
+
+textarea {
+  padding: 8px 4px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid rgb(181, 181, 181);
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid #55bc7e;
 }
 
 input,
@@ -138,7 +161,28 @@ textarea {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+form label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .btn-submit {
   color: white;
   background-color: #55bc7e;
+  border: none;
+  font-weight: bold;
+  width: fit-content;
+  font-size: 16px;
+  padding: 18px 16px;
+  border-radius: 4px;
+}
+
+.error-msg {
+  color: rgb(255, 42, 42);
 }

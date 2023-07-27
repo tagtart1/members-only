@@ -1,36 +1,40 @@
 extends layout 
 
 block content 
-    form(method='POST' action='')
-        .form-group 
-            label(for='first-name') First Name: 
-            input#first-name(type="text" placeholder="John" name="firstName")
-        .form-group
-            label(for='last-name') Last Name:
-            input#last-name(type='text' placeholder='Doe' name='lastName')
-            if errors.lastName 
-                p= errors.lastName.msg
-        .form-group
-            label(for='username') Username:
-            input#username(type='text' placeholder='johndoe123' name='username')
-            if errors.username 
-                p= errors.username.msg
+    main
+        h1 Sign Up 
+        form(method='POST' action='')
+            .form-group 
+                label(for='first-name') First Name: 
+                input#first-name(type="text" placeholder="John" name="firstName")
+                if errors.firstName 
+                    p.error-msg= errors.firstName.msg
+            .form-group
+                label(for='last-name') Last Name:
+                input#last-name(type='text' placeholder='Doe' name='lastName')
+                if errors.lastName 
+                    p.error-msg= errors.lastName.msg
+            .form-group
+                label(for='username') Username:
+                input#username(type='text' placeholder='johndoe123' name='username')
+                if errors.username 
+                    p.error-msg= errors.username.msg
 
-        .form-group
-            label(for='email') Email:
-            input#email(type='email' placeholder='johndoe@example.com' name='email')
-            if errors.email 
-                p= errors.email.msg
+            .form-group
+                label(for='email') Email:
+                input#email(type='email' placeholder='johndoe@example.com' name='email')
+                if errors.email 
+                    p.error-msg= errors.email.msg
 
-        .form-group
-            label(for='password') Password:
-            input#password(type='password' placeholder='••••••••' name='password')
-            if errors.password 
-                p= errors.password.msg
+            .form-group
+                label(for='password') Password:
+                input#password(type='password' placeholder='••••••••' name='password')
+                if errors.password 
+                    p.error-msg= errors.password.msg
 
-        .form-group
-            label(for='confirm-password') Confirm Password:
-            input#confirm-password(type='password' placeholder='••••••••' name='confirmPassword')
-            if errors.confirmPassword 
-                p= errors.confirmPassword.msg
-        button.btn-submit(type='submit') Sign Up
+            .form-group
+                label(for='confirm-password') Confirm Password:
+                input#confirm-password(type='password' placeholder='••••••••' name='confirmPassword')
+                if errors.confirmPassword 
+                    p.error-msg= errors.confirmPassword.msg
+            button.btn-submit(type='submit') Sign Up
