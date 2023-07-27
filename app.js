@@ -1,7 +1,10 @@
 var createError = require("http-errors");
+const compression = require("compression");
+const helmet = require("helmet");
 var express = require("express");
 var path = require("path");
 var passport = require("passport");
+const RateLimit = require("express-rate-limit");
 const session = require("express-session");
 require("dotenv").config();
 var cookieParser = require("cookie-parser");
@@ -21,10 +24,19 @@ async function main() {
   await mongoose.connect(process.env.MONGODB_URI);
 }
 
+// Set up rate limiter: 20 requests per min
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minutes
+  max: 20,
+});
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(limiter);
+app.use(compression());
+app.use(helmet());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
