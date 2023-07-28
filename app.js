@@ -12,7 +12,7 @@ var logger = require("morgan");
 
 const passportConfig = require("./config/passportConfig");
 
-var indexRouter = require("./routes/index");
+var authRouter = require("./routes/auth");
 var messageRouter = require("./routes/message");
 
 var app = express();
@@ -59,7 +59,7 @@ app.use(function (req, res, next) {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-app.use("/", indexRouter);
+app.use("/", authRouter);
 app.use("/", messageRouter);
 
 // catch 404 and forward to error handler
