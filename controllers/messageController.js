@@ -11,6 +11,7 @@ exports.home_get = asyncHandler(async (req, res, next) => {
   res.render("index", { title: "Member's Only - Home", messages: messages });
 });
 
+// GET create message
 exports.create_message_get = [
   // Ensure only authenticated users can access this page
   (req, res, next) => {
@@ -24,6 +25,7 @@ exports.create_message_get = [
   },
 ];
 
+// POST create message
 exports.create_message_post = [
   body("title", "Must include title").trim().isLength({ min: 1 }).escape(),
   body("text")
@@ -60,6 +62,7 @@ exports.create_message_post = [
   }),
 ];
 
+// POST delete message
 exports.delete_message_post = [
   body("messageId").escape(),
   asyncHandler(async (req, res, next) => {

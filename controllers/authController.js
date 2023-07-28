@@ -6,18 +6,12 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 
-exports.home_get = asyncHandler(async (req, res, next) => {
-  const messages = await Message.find({})
-    .populate("author", "username first_name last_name")
-    .exec();
-
-  res.render("index", { title: "Member's Only - Home", messages: messages });
-});
-
+// GET sign up
 exports.sign_up_get = (req, res) => {
   res.render("sign-up", { errors: {}, title: "Sign Up" });
 };
 
+// POST sign up
 exports.sign_up_post = [
   // Validate and sanitize the fields
   body("firstName", "Enter a first name").trim().isLength({ min: 1 }).escape(),
@@ -85,10 +79,12 @@ exports.sign_up_post = [
   }),
 ];
 
+// GET log in
 exports.log_in_get = (req, res, next) => {
   res.render("log-in", { title: "Log In" });
 };
 
+// POST log in
 exports.log_in_post = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
@@ -105,6 +101,7 @@ exports.log_in_post = (req, res, next) => {
   })(req, res, next);
 };
 
+// POST log out
 exports.log_out_get = (req, res, next) => {
   req.logout((err) => {
     if (err) {
@@ -114,6 +111,7 @@ exports.log_out_get = (req, res, next) => {
   });
 };
 
+// GET /join-the-club
 exports.join_the_club_get = [
   // Ensure only authenticated users can access this page
   (req, res, next) => {
@@ -128,6 +126,7 @@ exports.join_the_club_get = [
   },
 ];
 
+// POST /join-the-club
 exports.join_the_club_post = [
   body("secretCode").escape(),
   body("permissionSelection", "Select what permission you want access to")
@@ -144,6 +143,7 @@ exports.join_the_club_post = [
       });
     }
 
+    // User selects member code, validate using member code
     if (req.body.permissionSelection === "membership") {
       // Secret code not correct, inform user dont give access
       if (req.body.secretCode !== process.env.SECRET_MEMBER_PASSCODE) {
@@ -162,6 +162,7 @@ exports.join_the_club_post = [
       return res.redirect("/");
     }
 
+    // User selects admin code, validate using the admin code
     if (req.body.permissionSelection === "admin") {
       // Secret code not correct, inform user dont give access
       if (req.body.secretCode !== process.env.SECRET_ADMIN_PASSCODE) {
