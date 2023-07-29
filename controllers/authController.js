@@ -1,17 +1,16 @@
 const User = require("../models/user");
-const Message = require("../models/message");
 const bcrypt = require("bcryptjs");
 
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 
-// GET sign up
+// GET /sign-up
 exports.sign_up_get = (req, res) => {
   res.render("sign-up", { errors: {}, title: "Sign Up" });
 };
 
-// POST sign up
+// POST /sign-up
 exports.sign_up_post = [
   // Validate and sanitize the fields
   body("firstName", "Enter a first name").trim().isLength({ min: 1 }).escape(),
@@ -79,12 +78,12 @@ exports.sign_up_post = [
   }),
 ];
 
-// GET log in
+// GET /log-in
 exports.log_in_get = (req, res, next) => {
   res.render("log-in", { title: "Log In" });
 };
 
-// POST log in
+// POST /log-in
 exports.log_in_post = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
@@ -101,7 +100,7 @@ exports.log_in_post = (req, res, next) => {
   })(req, res, next);
 };
 
-// POST log out
+// POST /log-out
 exports.log_out_get = (req, res, next) => {
   req.logout((err) => {
     if (err) {
